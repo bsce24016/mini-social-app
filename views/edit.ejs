@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Post</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- Top Navbar -->
+    <nav class="bg-blue-600 text-white p-4 flex justify-between items-center shadow-md">
+        <h1 class="text-xl font-bold">Welcome, <%= post.user.username %></h1>
+        <a href="/logout" 
+           class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium">
+           Logout
+        </a>
+    </nav>
+
+    <div class="max-w-2xl mx-auto p-6">
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+            <h2 class="text-lg font-semibold mb-4">Edit your post:</h2>
+            <form action="/update/<%= post._id %>" method="POST">
+                <textarea name="content" required
+                    class="w-full border border-gray-300 rounded-md p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    placeholder="Edit your post..."><%= post.content %></textarea>
+                <button type="submit" 
+                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
+                    Update Post
+                </button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

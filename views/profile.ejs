@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- Top Navbar -->
+    <nav class="bg-blue-600 text-white p-4 flex justify-between items-center shadow-md">
+        <div class="flex items-start gap-4">
+            <div class="w-20 h-20 bg-red-500 rounded-md overflow-hidden">
+                <img class="w-full h-full object-cover" src="/image/upload/<%= user.profilepic %>" alt="">
+            </div>
+        <h1 class="text-xl font-bold">Welcome, <%= user.username %></h1>
+
+        </div>
+        <a href="/logout" 
+           class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium">
+           Logout
+        </a>
+    </nav>
+
+    <div class="max-w-2xl mx-auto p-6">
+
+        <!-- Create New Post -->
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+            <h2 class="text-lg font-semibold mb-4">What's on your mind?</h2>
+            <form action="/post" method="POST">
+                <textarea name="content" required
+                    class="w-full border border-gray-300 rounded-md p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    placeholder="Write something..."></textarea>
+                <button type="submit" 
+                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
+                    Post
+                </button>
+            </form>
+        </div>
+
+        <!-- Posts Section -->
+        <h2 class="text-xl font-semibold mb-4">Your posts:</h2>
+
+        <% if (user.posts.length === 0) { %>
+            <p class="text-gray-500 bg-white p-4 rounded-lg shadow-md">You haven't posted anything yet.</p>
+        <% } else { %>
+            <% user.posts.reverse().forEach(post => { %>
+                <div class="bg-white p-4 rounded-lg shadow-md mb-4">
+                    <h4 class="font-bold text-blue-600">@<%= user.username %></h4>
+                    <p class="text-gray-800 mb-3"><%= post.content %></p>
+                    <small class="mt-2 inline-block"><%= post.likes.length %> likes</small>
+                    <div class="flex gap-4 text-blue-500 text-sm mt-1">
+                        <a href="/like/<%= post._id %>" class="hover:underline">
+                            <%= post.likes.map(like => like.toString()).includes(user._id.toString()) ? "unlike" : "like" %>
+                        </a>
+                        <a href="/edit/<%= post._id %>" class="hover:underline">Edit</a>
+                    </div>
+                </div>
+            <% }) %>
+        <% } %>
+
+    </div>
+</body>
+</html>
